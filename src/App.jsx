@@ -1,23 +1,15 @@
 import { useState } from "react";
 import questions from "./data";
-import SingleQuestion from "./Components/SingleQuestion";
+import Questions from "./Components/Questions";
 
 const App = () => {
   // use the data array as a state value
   const [data, setData] = useState(questions);
 
-  // Get Question ID
-  function getQuestionId(id) {}
-
-  // Destructure the data
+  // Pass the state value as a prop into the Questions Component
   return (
     <main>
-      <section className="container">
-        <h1>Questions</h1>
-        {data.map((question) => {
-          return <SingleQuestion key={question.id} title={question.title} />;
-        })}
-      </section>
+      <Questions data={data} />
     </main>
   );
 };
