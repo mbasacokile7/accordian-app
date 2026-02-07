@@ -1,36 +1,165 @@
-## Figma URL
+# 📚 Accordion App
 
-[Accordion](https://www.figma.com/file/TAwJ3kWOqkw0o8UVtAMOHO/Accordion?node-id=0%3A1&t=1YEti8xBykw69tBH-1)
+A simple and interactive React accordion component that displays frequently asked questions (FAQs). Users can expand and collapse individual questions to reveal their answers.
 
-## Steps
+## 🎨 UI Preview
 
-#### Examine and Import Data
+![Accordion UI](./Accordian-UI.png)
 
-Review data.js and import the questions array from data.js into your project. This array should contain objects that represent the questions and their associated data, such as the question text
+## 📖 Project Overview
 
-#### Setup State Value
+This project is a practical implementation of core React concepts including state management, component composition, conditional rendering, and user interactions. It demonstrates how to build reusable components and manage data flow between parent and child components.
 
-Next, set up the questions array as a state variable using the useState hook. This will allow you to modify the data and have those changes automatically reflected in the rendered output.
+## ✨ Key Concepts Applied
 
-#### Render Questions
+### 1. **React Hooks - useState**
 
-To display the list of questions, you can iterate over the questions array and render a SingleQuestion component for each item in the array. Each SingleQuestion component should display the question text in the header, along with a button to toggle the question text.
+- Implemented state management using the `useState` hook in `SingleQuestion.jsx`
+- Uses `showAnswer` state to track whether an answer is displayed or hidden
+- Demonstrates how to update state and trigger re-renders
 
-#### Toggle Question
+```jsx
+const [showAnswer, setShowAnswer] = useState(false);
+```
 
-In the SingleQuestion component, you can set up the functionality for the toggle button by defining a function that toggles the state of a "showInfo" flag. When the flag is set to true, the answer text will be displayed. When the flag is set to false, only the question text will be displayed.
+### 2. **Component Composition**
 
-#### Extra Challenge
+- **App.jsx**: Root component that manages the questions data
+- **Questions.jsx**: Container component that renders a list of questions
+- **SingleQuestion.jsx**: Presentational component for individual Q&A items
 
-To set up the functionality where only one question is displayed at a time, you can modify the state of the questions array to keep track of the currently selected question. You can do this by defining a function that updates the state to reflect the selected question index. Then, you can use the selected question index to render only the SingleQuestion component that corresponds to the currently selected question.
+This demonstrates the parent-child component hierarchy and data flow from App → Questions → SingleQuestion.
 
-Overall, the flow of the application should look something like this:
+### 3. **Props & Data Flow**
 
-- Import the questions array from data.js into your project.
-- Set up the questions array as a state variable using the useState hook.
-- Iterate over the questions array and render a SingleQuestion component for each item in the array.
-- In the SingleQuestion component, display the question text in the header and a button to toggle the question text.
-- Define a function that toggles the state of a "showAnswer" flag, which determines whether the answer text is displayed or not.
-- Modify the state of the questions array to keep track of the currently selected question index.
-- Define a function that updates the state to reflect the selected question index.
-- Use the selected question index to render only the SingleQuestion component that corresponds to the currently selected question.
+- Data flows down from App.jsx to Questions.jsx as props
+- Questions.jsx maps over array and passes individual question data to SingleQuestion.jsx
+- Unidirectional data flow pattern (parent to child)
+
+```jsx
+// In Questions.jsx
+{
+  data.map((question) => {
+    return (
+      <SingleQuestion
+        key={question.id}
+        title={question.title}
+        info={question.info}
+      />
+    );
+  });
+}
+```
+
+### 4. **Conditional Rendering**
+
+- Shows/hides answer text based on `showAnswer` state
+- Toggles icon (Plus/Minus) based on expanded state
+- Demonstrates the ternary operator for conditional display
+
+```jsx
+{
+  showAnswer ? <p>{info}</p> : "";
+}
+{
+  showAnswer ? <FaMinus /> : <FaPlus />;
+}
+```
+
+### 5. **Event Handling**
+
+- `onClick` handler on toggle button
+- Custom `toggleAnswer()` function that updates state
+- Demonstrates React's synthetic event system
+
+```jsx
+<button type="button" className="question-btn" onClick={toggleAnswer}>
+  {showAnswer ? <FaMinus /> : <FaPlus />}
+</button>
+```
+
+### 6. **Key Prop in Lists**
+
+- Uses unique `id` from data as the `key` prop when mapping
+- Best practice for React list rendering
+
+### 7. **Third-Party Icons**
+
+- Integrates `react-icons` package for Plus/Minus icons
+- Demonstrates external library usage in React
+
+## 📁 Project Structure
+
+```
+accordian-app/
+├── src/
+│   ├── App.jsx          # Root component managing state
+│   ├── data.js          # Questions data array
+│   ├── index.css        # Global styles
+│   ├── main.jsx         # Entry point
+│   └── Components/
+│       ├── Questions.jsx         # List container component
+│       └── SingleQuestion.jsx    # Individual Q&A component
+├── index.html
+├── package.json
+└── vite.config.js
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js and npm installed on your machine
+
+### Installation
+
+1. Navigate to the project directory:
+
+```bash
+cd accordian-app
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+### Running the Application
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will open at `http://localhost:5173` (or specified port by Vite)
+
+## 🔗 Design Reference
+
+[View the Figma Design](https://www.figma.com/file/TAwJ3kWOqkw0o8UVtAMOHO/Accordion?node-id=0%3A1&t=1YEti8xBykw69tBH-1)
+
+## 📦 Dependencies
+
+- **React**: UI library
+- **Vite**: Build tool and dev server
+- **react-icons**: Icon library (FaPlus, FaMinus icons)
+
+## 💡 Learning Resources
+
+This project demonstrates fundamental React patterns that are essential for building modern web applications. The concepts applied here form the foundation for more complex state management patterns like Redux or Context API.
+
+### Topics Covered:
+
+- ✅ Functional Components
+- ✅ Hooks (useState)
+- ✅ Component Composition
+- ✅ Props & Prop Drilling
+- ✅ Conditional Rendering
+- ✅ Event Handling
+- ✅ Lists & Keys
+- ✅ State Management
+
+## 📝 License
+
+This project is part of a React/TypeScript/Next.js learning course.
